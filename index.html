@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KUMO.SU</title>
+  <style>
+    /* cyrillic-ext */
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url('fonts/Unbounded-900-cyrillic-ext.woff2') format('woff2');
+      unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+    }
+    /* cyrillic */
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url('fonts/Unbounded-900-cyrillic.woff2') format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+    /* latin-ext */
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url('fonts/Unbounded-900-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    /* latin */
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url('fonts/Unbounded-900-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    :root {
+      --bg: #f5f5f5;
+      --fg: #111;
+      --muted: #555;
+      --accent: #111;
+      --border: #ccc;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0d0d;
+        --fg: #eee;
+        --muted: #888;
+        --accent: #eee;
+        --border: #333;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+      background: var(--bg);
+      color: var(--fg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 640px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(2.2rem, 8vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: var(--fg);
+    }
+
+    .tagline .break {
+      display: block;
+      margin-top: 0.25rem;
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .description {
+      font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .contact {
+      font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .contact a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact a:hover {
+      opacity: 0.7;
+    }
+
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    .lang-switcher button {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: inherit;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0.1rem 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lang-switcher button:hover {
+      color: var(--fg);
+    }
+
+    .lang-switcher button.active {
+      color: var(--fg);
+      border-bottom: 1px solid var(--fg);
+    }
+
+    .font-credit {
+      font-size: 0.65rem;
+      color: var(--border);
+      margin-top: 0.5rem;
+    }
+
+    .font-credit a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .font-credit a:hover {
+      color: var(--muted);
+    }
+
+    [data-lang] {
+      display: none;
+    }
+
+    [data-lang].visible {
+      display: contents;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo">KUMO.SU</div>
+
+    <div class="tagline">
+      <span data-lang="en" class="visible">
+        Privacy of self-hosted and Convenience of cloud
+        <span class="break">No compromises.</span>
+      </span>
+      <span data-lang="ru">
+        Приватность self-hosted и удобство облака
+        <span class="break">Без компромиссов.</span>
+      </span>
+    </div>
+
+    <p class="description">
+      <span data-lang="en" class="visible">
+        We are building a next-generation, local-first cloud&mdash;embracing the open, federated internet and giving users full custody of their own data.
+      </span>
+      <span data-lang="ru">
+        Мы создаём облако нового поколения с подходом local-first&thinsp;&mdash;&thinsp;поддерживая открытый федеративный интернет и оставляя данные под полным контролем пользователя.
+      </span>
+    </p>
+
+    <!--<div class="contact">
+      <span data-lang="en" class="visible">
+        Interested in participating?<br>
+        Send an email to <a href="mailto:alex@hsslb.ch">alex@hsslb.ch</a>
+        or reach out via Telegram <a href="https://t.me/hsslbch" target="_blank" rel="noopener">@hsslbch</a>
+      </span>
+      <span data-lang="ru">
+        Хотите принять участие?<br>
+        Напишите на <a href="mailto:alex@hsslb.ch">alex@hsslb.ch</a>
+        или в Telegram <a href="https://t.me/hsslbch" target="_blank" rel="noopener">@hsslbch</a>
+      </span>
+    </div>
+
+    <div class="lang-switcher">
+      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <span>/</span>
+      <button id="btn-ru" onclick="setLang('ru')">RU</button>
+    </div>-->
+
+    <div class="font-credit">
+      title font: <a href="https://unbounded.polkadot.network/" target="_blank" rel="noopener">Unbounded</a>
+    </div>
+  </main>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('visible', el.dataset.lang === lang);
+      });
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('lang', lang); } catch (_) {}
+    }
+
+    (function () {
+      const saved = (() => { try { return localStorage.getItem('lang'); } catch (_) {} })();
+      const browser = navigator.language && navigator.language.startsWith('ru') ? 'ru' : 'en';
+      setLang(saved || browser);
+    })();
+  </script>
+</body>
+</html>
