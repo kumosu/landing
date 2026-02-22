@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KUMO.SU</title>
+  <link rel="icon" type="image/png" href="logo.png">
   <style>
     /* cyrillic-ext */
     @font-face {
@@ -77,9 +78,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      padding: 2rem 1.5rem;
+      padding: 4rem 1.5rem;
       text-align: center;
       line-height: 1.6;
     }
@@ -169,7 +169,8 @@
     .font-credit {
       font-size: 0.65rem;
       color: var(--border);
-      margin-top: 0.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .font-credit a {
@@ -181,79 +182,106 @@
       color: var(--muted);
     }
 
-    [data-lang] {
-      display: none;
+    .bento {
+      max-width: 860px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      text-align: left;
     }
 
-    [data-lang].visible {
-      display: contents;
+    .bento-card {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .bento-card.span-2 {
+      grid-column: span 2;
+    }
+
+    .bento-card .eyebrow {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.15rem;
+    }
+
+    .bento-card .card-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(0.88rem, 2vw, 0.98rem);
+      color: var(--fg);
+    }
+
+    .bento-card .card-body {
+      font-size: clamp(0.74rem, 1.8vw, 0.81rem);
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .bento {
+        grid-template-columns: 1fr;
+      }
+      .bento-card.span-2 {
+        grid-column: span 1;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="logo">KUMO.SU</div>
-
-    <div class="tagline">
-      <span data-lang="en" class="visible">
+  <section class="bento">
+    <div class="bento-card span-2" style="border-color: transparent;">
+      <div class="logo">KUMO.SU</div>
+      <div class="tagline" style="margin-top: 1rem;">
         Privacy of self-hosted and Convenience of cloud
         <span class="break">No compromises.</span>
-      </span>
-      <span data-lang="ru">
-        Приватность self-hosted и удобство облака
-        <span class="break">Без компромиссов.</span>
-      </span>
-    </div>
-
-    <p class="description">
-      <span data-lang="en" class="visible">
+      </div>
+      <div class="card-body" style="margin-top: 0.5rem;">
         We are building a next-generation, local-first cloud&mdash;embracing the open, federated internet and giving users full custody of their own data.
-      </span>
-      <span data-lang="ru">
-        Мы создаём облако нового поколения с подходом local-first&thinsp;&mdash;&thinsp;поддерживая открытый федеративный интернет и оставляя данные под полным контролем пользователя.
-      </span>
-    </p>
-
-    <!--<div class="contact">
-      <span data-lang="en" class="visible">
-        Interested in participating?<br>
-        Send an email to <a href="mailto:alex@hsslb.ch">alex@hsslb.ch</a>
-        or reach out via Telegram <a href="https://t.me/hsslbch" target="_blank" rel="noopener">@hsslbch</a>
-      </span>
-      <span data-lang="ru">
-        Хотите принять участие?<br>
-        Напишите на <a href="mailto:alex@hsslb.ch">alex@hsslb.ch</a>
-        или в Telegram <a href="https://t.me/hsslbch" target="_blank" rel="noopener">@hsslbch</a>
-      </span>
+      </div>
+    </div>
+    <div class="bento-card">
+      <div class="eyebrow">For users</div>
+      <div class="card-title">Zero setup.</div>
+      <div class="card-body">Log in to the app. The app handles the rest — no servers to configure, no IP addresses to type in.</div>
     </div>
 
-    <div class="lang-switcher">
-      <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
-      <span>/</span>
-      <button id="btn-ru" onclick="setLang('ru')">RU</button>
-    </div>-->
-
-    <div class="font-credit">
-      title font: <a href="https://unbounded.polkadot.network/" target="_blank" rel="noopener">Unbounded</a>
+    <div class="bento-card">
+      <div class="eyebrow">Self-hosted</div>
+      <div class="card-title">True ownership.</div>
+      <div class="card-body">Run kumo.su on your own server. Free and open source. We have zero access to your data.</div>
     </div>
-  </main>
+    <div class="bento-card">
+      <div class="eyebrow">Managed</div>
+      <div class="card-title">We host, you own.</div>
+      <div class="card-body">Let us handle the infrastructure. We're your hosting provider — not your data custodian. Migrate to self-hosted anytime, with one click.</div>
+    </div>
+    <div class="bento-card">
+      <div class="eyebrow">Pricing</div>
+      <div class="card-title">Free + pay-as-you-go.</div>
+      <div class="card-body">No $5/month per app for storing a single file. Pay only for what you actually use.</div>
+    </div>
 
-  <script>
-    function setLang(lang) {
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.classList.toggle('visible', el.dataset.lang === lang);
-      });
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-      document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
-      document.documentElement.lang = lang;
-      try { localStorage.setItem('lang', lang); } catch (_) {}
-    }
+    <div class="bento-card">
+      <div class="eyebrow">For developers</div>
+      <div class="card-title">BYOC SDK.</div>
+      <div class="card-body">Your app needs a server? Don't ask users to wrestle with Docker. Using the SDK, your app deploys itself into the user's cloud. We share revenue from managed instances to support developers of sustainable apps.</div>
+    </div>
+    <div class="bento-card span-2">
+      <div class="eyebrow">Mission</div>
+      <div class="card-title">Free users from vendor lock-in.</div>
+      <div class="card-body">Your data is never a hostage — migrate from managed to self-hosted anytime. We're building an open standard and a free BYOC cloud implementation to bring this freedom to everyone.</div>
+    </div>
+  </section>
 
-    (function () {
-      const saved = (() => { try { return localStorage.getItem('lang'); } catch (_) {} })();
-      const browser = navigator.language && navigator.language.startsWith('ru') ? 'ru' : 'en';
-      setLang(saved || browser);
-    })();
-  </script>
+  <div class="font-credit">
+    title font: <a href="https://unbounded.polkadot.network/" target="_blank" rel="noopener">Unbounded</a>
+  </div>
 </body>
 </html>
